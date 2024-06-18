@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
 
 import 'package:chat/post.dart';
 import 'package:chat/my_page.dart';
@@ -148,7 +147,7 @@ class _ChatPageState extends State<ChatPage> {
                     // これは withConverter を使ったことにより得られる恩恵です。
                     // 何もしなければこのデータ型は Map になります。
                     final post = docs[index].data();
-                    return PostWidget(post: post);
+                    return Text(post.text);
                   },
                 );
               },
@@ -181,57 +180,6 @@ class _ChatPageState extends State<ChatPage> {
               // 通常は Map しか受け付けませんが、withConverter を使用したことにより Post インスタンスを受け取れるようになります。
               newDocumentReference.set(newPost);
             },
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class PostWidget extends StatelessWidget {
-  const PostWidget({
-    super.key,
-    required this.post,
-  });
-
-  final Post post;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        children: [
-          CircleAvatar(
-            backgroundImage: NetworkImage(
-              post.posterImageUrl,
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      post.posterName,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
-                    ),
-                    Text(
-                      // toDate() で Timestamp から DateTime に変換できます。
-                      DateFormat('MM/dd HH:mm').format(post.createdAt.toDate()),
-                      style: const TextStyle(fontSize: 10),
-                    ),
-                  ],
-                ),
-                Text(post.text),
-              ],
-            ),
           ),
         ],
       ),
