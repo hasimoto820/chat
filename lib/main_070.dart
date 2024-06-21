@@ -297,37 +297,6 @@ class PostWidget extends StatelessWidget {
                   ),
                   child: Text(post.text),
                 ),
-              ],
-            ),
-          ),
-          if (FirebaseAuth.instance.currentUser!.uid == post.posterId)
-            Row(
-              children: [
-                /// 編集ボタン
-                if (FirebaseAuth.instance.currentUser!.uid == post.posterId)
-                  IconButton(
-                    onPressed: () {
-                      //　ダイアログを表示する場合は `showDialog` 関数を実行します。
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            content: TextFormField(
-                              initialValue: post.text,
-                              autofocus: true,
-                              onFieldSubmitted: (newText) {
-                                post.reference.update({'text': newText});
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          );
-                        },
-                      );
-                    },
-                    icon: const Icon(Icons.edit),
-                  ),
-
-                /// 削除ボタン
                 // List の中の場合は if 文であっても {} この波かっこはつけなくてよい
                 if (FirebaseAuth.instance.currentUser!.uid == post.posterId)
                   IconButton(
@@ -339,6 +308,7 @@ class PostWidget extends StatelessWidget {
                   ),
               ],
             ),
+          ),
         ],
       ),
     );
